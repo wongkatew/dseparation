@@ -8,19 +8,122 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <link href="style.css" rel="stylesheet"/>
+  <script src="dsepalg.js"></script>
 </head>
 <body>
+  <div class="jumbotron">
+    <div class="top">
+      <h1 style="text-align:center">Conditional Independence and D-Separation in Bayes Nets</h1>
+    </div>
+  </div>
   <div class="col">
-    <div class="row">
+    <div class="row explanation">
       <div class="col">
-        <h1>Conditional Independence and D-Separation in Bayes Nets</h1>
+        <p>First of all, what is conditional independence in a Bayes Net? <br/><br/>
+        In a Bayes Net, each node represents an event (or variable). When we want to know if two nodes
+        A and B are conditionally independent given a node C, we're looking to see if P(A,B|C) = P(A|C)P(B|C),
+        which is equivalent to P(A|C)=P(A|B,C). <br/><br/>
+        In other words, if we know C, and we want to know
+        the probability of A happening, knowing about B does not give us any additional information that influences our
+        belief of when A can happen. Likewise, if we know C, and we want to know the probability of B happening,
+        knowing about A doesn't give us any additional information that influences our belief of when B can happen.
+        Knowing that A and B are conditionally independent given C tells us that if we want to know P(A,B|C),
+        we can multiply P(A|C) and P(B|C) to get P(A,B|C). <br/><br/>
+        TODO: more things about how d-separation is related to conditional independence in BNs and the theorem
+        </p>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <p>Hello dawgs, we gon learn bout conditional independence and what d-separation is!</p>
+    <div class="row" id="exploreinput">
+      <div class="col-4">
+        <img id="exploreGraph" src="images/simplegraph.jpg"/>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4">
+            <button type="button" class="btn btn-secondary">Simple BN</button>
+          </div>
+          <div class="col-4">
+            <button type="button" class="btn btn-secondary">Complex BN</button>
+          </div>
+          <div class="col-4">
+            <button type="button" class="btn btn-secondary">Very Complex BN</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class=col">
+            <div class="row">
+              <p>Check the Conditional Independence between:</p>
+            </div>
+            <div class="row">
+              <p> set of node(s) X: </p>
+            </div>
+            <div class="row">
+              <p> and set of node(s) Y: </p>
+            </div>
+            <div class="row">
+              <p> given the set of node(s) E: </p>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>TODO: GO button</p>
+              </div>
+            </div>
+            <div class="row">
+              <p>The nodes in X are conditionally independent from the nodes in Y
+              given the nodes in E if P(X,Y|E) = P(X|E)P(Y|E), which is true if and
+              only if every undirected path from a node in X to a node in Y is d-separated
+              by a node in E.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="row" id="exploreresult">
+      <div class="col">
+        <p>List of paths that are d-separated with their condition:</p>
+      </div>
+    </div>
+    <div class="practicing">
+      <div class="row" id="practiceproblems">
+        <div class="col-4">
+          <img id="practiceGraph" src="images/practice1.jpg"/>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-secondary">New Practice Problem</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>True or False:</p>
+              <p id="practiceprob">P(A|B,C) = P(A|B)</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>TODO: True button</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>TODO: False button</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>TODO: GO button</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="practiceresults">
+        <div class="col">
+          <p>ur wrong bruh, this path ain't d-separated</p>
+        </div>
+      </div>
+    <div>
   </div>
 
 </body>
