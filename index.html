@@ -6,11 +6,15 @@
   <title>Conditional Independence and D-Separation</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  <link href="style.css" rel="stylesheet"/>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
   <script src="dsepalg.js"></script>
+  <script src="frontend.js"></script>
+  <link href="style.css" rel="stylesheet"/>
 </head>
+
 <body>
   <div class="jumbotron">
     <div class="top">
@@ -36,18 +40,18 @@
     </div>
     <div class="row" id="exploreinput">
       <div class="col-4">
-        <img id="exploreGraph" src="images/simplegraph.jpg"/>
+        <img id="exploreGraph" src="images/simplegraph.png"/>
       </div>
       <div class="col-6">
         <div class="row">
           <div class="col-4">
-            <button type="button" class="btn btn-secondary">Simple BN</button>
+            <button id="simplebutton" type="button" class="btn btn-secondary">Simple BN</button>
           </div>
           <div class="col-4">
-            <button type="button" class="btn btn-secondary">Complex BN</button>
+            <button id="complexbutton" type="button" class="btn btn-secondary">Complex BN</button>
           </div>
           <div class="col-4">
-            <button type="button" class="btn btn-secondary">Very Complex BN</button>
+            <button id="challengebutton" type="button" class="btn btn-secondary">Very Complex BN</button>
           </div>
         </div>
         <div class="row">
@@ -87,12 +91,12 @@
     <div class="practicing">
       <div class="row" id="practiceproblems">
         <div class="col-4">
-          <img id="practiceGraph" src="images/practice1.jpg"/>
+          <img id="practiceGraph" src="images/practicegraph1.png"/>
         </div>
         <div class="col">
           <div class="row">
             <div class="col">
-              <button class="btn btn-secondary">New Practice Problem</button>
+              <button id="practicebutton" class="btn btn-secondary">New Practice Problem</button>
             </div>
           </div>
           <div class="row">
