@@ -84,34 +84,6 @@ class UGraph {
   }
 }
 
-class Queue
-{
-    constructor() {
-      this.items = [];
-    }
-
-    enqueue(node) {
-      this.items.push(node);
-    }
-
-    dequeue(node) {
-      if(this.isEmpty())
-        return false;
-      return this.items.shift();
-    }
-
-    front() {
-      if(this.isEmpty())
-        return false;
-      return this.items[0];
-    }
-
-    isEmpty() {
-      return this.items.length == 0;
-    }
-}
-
-
 function performBfs(graph, src_node) {
   var visited = [];
   for (var i = 0; i < graph.num__of_nodes; i++) {
@@ -170,8 +142,8 @@ var c1 = 'condition1';
 var c2 = 'condition2';
 var c3 = 'condition3';
 
-X = ['E'];
-Y = ['A'];
+X = ['A'];
+Y = ['G'];
 E = ['D', 'B'];
 
 //Given: {A, B, C, D, E, F, G, H}
@@ -181,12 +153,16 @@ E = ['D', 'B'];
 function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
   var result = [];
   var paths = []
-  var one_pair = [];
+  var one_path = [];
   var src, dst;
-  var path;
   var connected;
-  //if arrays share any values, return error
 
+  var visited_paths = [];
+  var queue = [];
+  var path = [];
+  var node;
+
+  //if 2 nodes are directly connected, automatically not CI
   for (var x = 0; x < Xarray.length; x++) {
     for (var y = 0; y < Yarray.length; y++) {
       src = Xarray[x];
@@ -194,24 +170,37 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
 
       connected = d_graph.checkDirectlyConnected(src, dst);
       if (connected) {
-        path = [src, connected, dst];
-        one_pair[path] = c1;
-        result.push(one_pair);
+        one_path = [src, connected, dst, c1];
+        paths.push(one_path);
         result['CI'] = false;
+        result['Pairs'] = paths;
         return result;
       }
-      else {
-        return false
+    }
+  }
+  //perform bfs and store path as you go
+  //if I run into a Y node then look back at path and see if it fulfills a condition
+  for (var x = 0; x < Xarray.length; x++) {
+    src = Xarray[x];
+    queue.push([src]);
+    while (queue.length > 0) {
+      path = queue.shift();
+      console.log(path);
+
+      node = path.pop();
+      console.log("node is " + node);
+
+      if (Yarray.includes(node)) {
+        //check if path fulfills any conditions
       }
     }
   }
 }
 
 answer = conditionalIndependence(d_graph, u_graph, X, Y, E);
-console.log(answer);
-// conn = performBfs(d_graph, X[0]);
+// console.log(answer);
+// conn = performBfs(u_graph, X[0]);
 // console.log(conn);
-
 
 /*
 
@@ -239,5 +228,4 @@ NOTES:
 - for now assuming all of our graphs do not have cycles
 - only 1 element in Xarray and Yarray
 - Need to figure out how to structure return to Kate
-- Return error if user submits a node in multiple arrays
 */
