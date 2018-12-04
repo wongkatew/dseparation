@@ -1,9 +1,17 @@
 let exampleGraphs = [
   { numNodes: 4, nodes: ['A', 'B', 'C', 'D'] },
   { numNodes: 6, nodes: ['A', 'B', 'C', 'D', 'E', 'F'] },
-  { numNodes: 9, nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',' I']}
+  { numNodes: 9, nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',' I'] }
 ];
+
 let currentGraph = 0;
+
+let practiceProblems = [
+  { graph: 'images/practicegraph1.png', problem: 'P(A|B,C) = P(A|B)', answer: false },
+  { graph: 'images/practicegraph2.png', problem: 'P(A|C,D) = P(A|D)', answer: true },
+  { graph: 'images/practicegraph1.png', problem: 'P(A|B,C) = P(A|C)', answer: true },
+  { graph: 'images/practicegraph1.png', problem: 'P(A,B|C,D) = P(A|C,D)P(B|C,D)', answer: false},
+];
 
 $(document).ready(function() {
   $('#simplebutton').click(function() {
@@ -96,42 +104,17 @@ $(document).ready(function() {
     }
   });
 
-  let currProb = 1;
+  let currProb = 0;
   $('#practicebutton').click(function() {
     currProb++;
-    if (currProb === 1) {
-      $('#practiceGraph').attr("src", "images/practicegraph1.png");
-    } else if (currProb === 2) {
-      $('#practiceGraph').attr("src", "images/practicegraph2.png");
-    } else if (currProb === 3) {
-      $('#practiceGraph').attr("src", "images/practicegraph1.png");
-    } else if (currProb === 4) {
-      $('#practiceGraph').attr("src", "images/practicegraph1.png");
-    } else if (currProb === 5) {
-      $('#practiceGraph').attr("src", "images/practicegraph1.png");
-    } else if (currProb === 6) {
-      $('#practiceGraph').attr("src", "images/practicegraph1.png");
-    } else if (currProb === 7) {
-      $('#practiceGraph').attr("src", "images/practicegraph1.png");
-    } else if (currProb === 8) {
-      $('#practiceGraph').attr("src", "images/practicegraph1.png");
-    } else if (currProb === 9) {
-      $('#practiceGraph').attr("src", "images/practicegraph1.png");
-    } else if (currProb === 10) {
-      $('#practiceGraph').attr("src", "images/practicegraph2.png");
-    } else if (currProb === 11) {
-      $('#practiceGraph').attr("src", "images/practicegraph2.png");
-    } else if (currProb === 12) {
-      $('#practiceGraph').attr("src", "images/practicegraph2.png");
-    } else if (currProb === 13) {
-      $('#practiceGraph').attr("src", "images/practicegraph2.png");
-    } else if (currProb === 14) {
-      $('#practiceGraph').attr("src", "images/practicegraph2.png");
-    } else if (currProb === 15) {
-      $('#practiceGraph').attr("src", "images/practicegraph2.png");
+    if (currProb < practiceProblems.length) {
+      $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
+      document.getElementById('practiceprob').innerHTML = '';
+      $('#practiceprob').append(practiceProblems[currProb].problem);
     } else {
-      $('#practiceGraph').attr("src", "images/practicegraph2.png");
-      currProb = 0
+      currProb = 0;
+      $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
+      $('#practiceprob').append(practiceProblems[currProb].problem);
     }
 
   });
