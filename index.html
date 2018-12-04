@@ -22,8 +22,8 @@
     </div>
   </div>
   <div class="col">
-    <div class="row explanation">
-      <div class="col">
+    <div class="row">
+      <div class="col explanation">
         <p>First of all, what is conditional independence in a Bayes Net? <br/><br/>
         In a Bayes Net, each node represents an event (or variable). When we want to know if two nodes
         A and B are conditionally independent given a node C, we're looking to see if P(A,B|C) = P(A|C)P(B|C),
@@ -40,7 +40,7 @@
     </div>
     <div class="row" id="exploreinput">
       <div class="col-4">
-        <img id="exploreGraph" src="images/simplegraph.png"/>
+        <img id="exploreGraph" src="images/simplegraph.png" class="graph"/>
       </div>
       <div class="col-6">
         <div class="row">
@@ -57,20 +57,88 @@
         <div class="row">
           <div class=col">
             <div class="row">
-              <p>Check the Conditional Independence between:</p>
+              <div class="col">
+                <p>Check the Conditional Independence between:</p>
+              </div>
             </div>
-            <div class="row">
-              <p> set of node(s) X: </p>
+            <div class="row nodes">
+              <div class="col">
+                <p> Set of node(s) X: </p>
+              </div>
+              <div class="col">
+                <div id="setX">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="x1" id="x1" value="A">
+                    <label class="form-check-label" for="x1">A</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="x2" id="x2" value="B">
+                    <label class="form-check-label" for="x2">B</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="x3" id="x3" value="C">
+                    <label class="form-check-label" for="x3">C</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="x4" id="x4" value="D">
+                    <label class="form-check-label" for="x4">D</label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="row">
-              <p> and set of node(s) Y: </p>
+            <div class="row nodes" style="padding-top: 15px;">
+              <div class="col">
+                <p>and the set of node(s) Y: </p>
+              </div>
+              <div class="col">
+                <div id="setY">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="y1" id="y1" value="A">
+                    <label class="form-check-label" for="y1">A</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="y2" id="y2" value="B">
+                    <label class="form-check-label" for="y2">B</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="y3" id="y3" value="C">
+                    <label class="form-check-label" for="y3">C</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="y4" id="y4" value="D">
+                    <label class="form-check-label" for="y4">D</label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="row">
-              <p> given the set of node(s) E: </p>
+            <div class="row nodes" style="padding-top: 15px;">
+              <div class="col">
+                <p> given the set of node(s) E: </p>
+              </div>
+              <div class="col">
+                <div id="setE">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="e1" id="e1" value="A">
+                    <label class="form-check-label" for="e1">A</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="e2" id="e2" value="B">
+                    <label class="form-check-label" for="e2">B</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="e3" id="e3" value="C">
+                    <label class="form-check-label" for="e3">C</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="e4" id="e4" value="D">
+                    <label class="form-check-label" for="e4">D</label>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="row">
               <div class="col">
-                <p>TODO: GO button</p>
+                <button id="examplebutton" type="button" class="btn btn-secondary" style="margin-left: 40vw;">Go</button>
               </div>
             </div>
             <div class="row">
@@ -91,7 +159,7 @@
     <div class="practicing">
       <div class="row" id="practiceproblems">
         <div class="col-4">
-          <img id="practiceGraph" src="images/practicegraph1.png"/>
+          <img id="practiceGraph" src="images/practicegraph1.png" class="graph"/>
         </div>
         <div class="col">
           <div class="row">

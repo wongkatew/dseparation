@@ -31,10 +31,14 @@
   border-radius: 10px;
 }
 
-#practiceGraph {
+.graph {
   max-width:100%;
 }
 
-#exploreGraph {
-  max-width:100%;
+.nodes {
+  border-color: #FFDCB3;
+  border-width: medium;
+  border-style: solid;
+  border-radius: 10px;
+  margin-top: 5px;
 }
