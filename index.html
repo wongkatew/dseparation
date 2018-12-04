@@ -40,7 +40,7 @@
     </div>
     <div class="row" style="height: 3vh; background-color: #D7903A;">
     </div>
-    <div class="row" style="padding-top: 10px;">
+    <div class="row" style="padding-top: 10px; background-color: gainsboro;">
       <div class="col" style="text-align: center;">
         <h1>Examples</h1>
       </div>
@@ -158,12 +158,20 @@
         </div>
       </div>
     </div>
-    <div class="row" id="exploreresult">
-      <div class="col">
+    <div class="row">
+      <div class="col" id="exploreresult">
+        <p>Are X and Y conditionally independent given E?</p>
         <p>List of paths that are d-separated with their condition:</p>
       </div>
     </div>
-    <div class="practicing">
+    <div class="row" style="height: 3vh; background-color: #D7903A; margin-top: 10px;">
+    </div>
+    <div class="row" style="padding-top: 10px; background-color: gainsboro;">
+      <div class="col" style="text-align: center;">
+        <h1>Practice Problems</h1>
+      </div>
+    </div>
+    <div class="practicing" style="margin-top: 10px;">
       <div class="row" id="practiceproblems">
         <div class="col-4">
           <img id="practiceGraph" src="images/practicegraph1.png" class="graph"/>
@@ -184,11 +192,11 @@
           <div class="row">
             <div class="col" style="padding-left: 5vw;">
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="true" id="true" value="true">
+                <input class="form-check-input" type="radio" name="prac" id="true" value="true">
                 <label class="form-check-label" for="true">True</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="false" id="false" value="false">
+                <input class="form-check-input" type="radio" name="prac" id="false" value="false">
                 <label class="form-check-label" for="false">False</label>
               </div>
             </div>
@@ -201,12 +209,12 @@
           </div>
         </div>
       </div>
-      <div class="row" id="practiceresults">
+      <div class="row">
         <div class="col">
-          <p>ur wrong bruh, this path ain't d-separated</p>
+          <p id="practiceresults">Try a problem! Your feedback will be here.</p>
         </div>
       </div>
-    <div>
+    </div>
   </div>
 
 </body>

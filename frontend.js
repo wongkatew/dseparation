@@ -5,6 +5,7 @@ let exampleGraphs = [
 ];
 
 let currentGraph = 0;
+let currProb = 0;
 
 let practiceProblems = [
   { graph: 'images/practicegraph1.png', problem: 'P(A|B,C) = P(A|B)', answer: false },
@@ -104,9 +105,12 @@ $(document).ready(function() {
     }
   });
 
-  let currProb = 0;
   $('#practicebutton').click(function() {
     currProb++;
+
+    $('input:radio').prop('checked', false);
+    document.getElementById('practiceresults').innerHTML = 'Try a problem! Your feedback will be here.';
+
     if (currProb < practiceProblems.length) {
       $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
       document.getElementById('practiceprob').innerHTML = '';
@@ -118,6 +122,38 @@ $(document).ready(function() {
     }
 
   });
+
+  $('#checkpracticebutton').click(function() {
+    let trueChecked = $('#true').is(':checked');
+    let falseChecked = $('#false').is(':checked');
+    if (!trueChecked && !falseChecked) {
+      alert("Please select True or False.");
+      return;
+    }
+    if (trueChecked) {
+      if (practiceProblems[currProb].answer == true) {
+        document.getElementById('practiceresults').innerHTML = '';
+        $('#practiceresults').append("Correct!");
+        // TODO: More reasons
+      } else {
+        document.getElementById('practiceresults').innerHTML = '';
+        $('#practiceresults').append("Incorrect.");
+        // TODO: More reasons
+      }
+    } else {
+      if (practiceProblems[currProb].answer == false) {
+        document.getElementById('practiceresults').innerHTML = '';
+        $('#practiceresults').append("Correct!");
+        // TODO: More reasons
+      } else {
+        document.getElementById('practiceresults').innerHTML = '';
+        $('#practiceresults').append("Incorrect.");
+        // TODO: More reasons
+      }
+    }
+
+  });
+
 
   $('#examplebutton').click(function() {
     var i;
