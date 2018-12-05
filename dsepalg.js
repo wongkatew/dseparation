@@ -125,7 +125,8 @@ function checkConditions(graph, path, index, Earray) {
 
   if (Earray.includes(mid_node)) {
     //condition1
-    if (left_list.includes(mid_node) && mid_list.includes(right_node)) {
+    if ((left_list.includes(mid_node) && mid_list.includes(right_node)) ||
+        (mid_list.includes(left_node) && right_list.includes(mid_node))) {
       cond = c1;
     }
     //condition2
@@ -158,9 +159,13 @@ function checkConditions(graph, path, index, Earray) {
   return result;
 }
 
+var all_Graphs = [];
+
 //Initialize test graph
 var d_graph = new DGraph(8);
 var u_graph = new UGraph(8);
+var d_graph1 = new DGraph(4);
+var u_graph1 = new UGraph(4);
 
 var nodes = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H']
 for (var i = 0; i < nodes.length; i++) {
@@ -183,9 +188,26 @@ u_graph.addEdge('E', 'G');
 u_graph.addEdge('C', 'F');
 u_graph.addEdge('C', 'H');
 
-X = ['B'];
+nodes = ['A','B', 'C', 'D'];
+for (var i = 0; i < nodes.length; i++) {
+  d_graph1.addNode(nodes[i]);
+  u_graph1.addNode(nodes[i]);
+}
+
+d_graph1.addEdge('A', 'B');
+d_graph1.addEdge('B', 'C');
+d_graph1.addEdge('B', 'D');
+
+u_graph1.addEdge('A', 'B');
+u_graph1.addEdge('B', 'C');
+u_graph1.addEdge('B', 'D');
+
+all_Graphs[d_graph] = u_graph;
+all_Graphs[d_graph1] = u_graph1;
+
+X = ['D'];
 Y = ['C'];
-E = ['F'];
+E = ['A'];
 
 //Given: {A, B, C, D, E, F, G, H}
 //TODO: hardcode the adjacency list
@@ -281,7 +303,8 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
   return result;
 }
 
-answer = conditionalIndependence(d_graph, u_graph, X, Y, E);
+answer = conditionalIndependence(d_graph1, u_graph1, X, Y, E);
+
 
 /*
 NOTES:
