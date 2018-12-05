@@ -24,6 +24,14 @@ be linked together)
 
   return [(path1, condition), (path2, condition)]
 */
+
+var r = 'r';
+var l = 'l';
+var c1 = 'condition1';
+var c2 = 'condition2';
+var c3 = 'condition3';
+
+
 class DGraph {
   constructor(num_nodes) {
     this.num__of_nodes = num_nodes;
@@ -84,31 +92,70 @@ class UGraph {
   }
 }
 
-function performBfs(graph, src_node) {
-  var visited = [];
-  for (var i = 0; i < graph.num__of_nodes; i++) {
-    all_nodes = graph.list_of_nodes;
-    visited[all_nodes[i]] = false;
+function tracePath(graph, path) {
+  var result = [];
+
+  result.push(path[0]);
+  for (var n = 1; n < path.length; n++) {
+    prev_list = graph.adjacency_dict[path[n-1]];
+    if (prev_list.includes(path[n])) {
+      result.push(r);
+    }
+    else {
+      result.push(l);
+    }
+    result.push(path[n]);
   }
+  return result;
+}
 
-  var queue = new Queue();
-  visited[src_node] = true;
-  queue.enqueue(src_node);
+function checkConditions(graph, path, index, Earray) {
+  console.log(path);
+  console.log("index = " + index);
+  var result = [];
+  var cond;
 
-  while(!queue.isEmpty()) {
-    var element = queue.dequeue();
-    var list = graph.adjacency_dict[element];
+  var left_node = path[index - 1];
+  var mid_node = path[index];
+  var right_node = path[index + 1];
 
-    for (var j in list) {
-      var n = list[j];
+  left_list = graph.adjacency_dict[left_node];
+  mid_list = graph.adjacency_dict[mid_node];
+  right_list = graph.adjacency_dict[right_node];
 
-      if (!visited[n]) {
-        visited[n] = true;
-        queue.enqueue(n);
+  if (Earray.includes(mid_node)) {
+    //condition1
+    if (left_list.includes(mid_node) && mid_list.includes(right_node)) {
+      cond = c1;
+    }
+    //condition2
+    else if (mid_list.includes(left_node) && mid_list.includes(right_node)) {
+      cond = c2;
+    }
+  }
+  //condition3
+  else if (left_list.includes(mid_node) && right_list.includes(mid_node)){
+    cond = c3;
+    for (var i = 0; i < mid_list.length; i++) {
+      if (Earray.includes(mid_list[i])) {
+        cond = false;
       }
     }
   }
-  return visited;
+
+  result = tracePath(graph, path);
+
+  if (cond == c1 || cond == c2 || cond == c3) {
+    result.push(cond);
+    result.push(true);
+  }
+  else {
+    result.push(c1);
+    result.push(false);
+  }
+  console.log("Traced Path");
+  console.log(result);
+  return result;
 }
 
 //Initialize test graph
@@ -116,7 +163,7 @@ var d_graph = new DGraph(8);
 var u_graph = new UGraph(8);
 
 var nodes = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H']
-for (i = 0; i < nodes.length; i++) {
+for (var i = 0; i < nodes.length; i++) {
   d_graph.addNode(nodes[i]);
   u_graph.addNode(nodes[i]);
 }
@@ -136,15 +183,9 @@ u_graph.addEdge('E', 'G');
 u_graph.addEdge('C', 'F');
 u_graph.addEdge('C', 'H');
 
-var r = 'r';
-var l = 'l';
-var c1 = 'condition1';
-var c2 = 'condition2';
-var c3 = 'condition3';
-
-X = ['A'];
-Y = ['G'];
-E = ['D', 'B'];
+X = ['B'];
+Y = ['C'];
+E = ['F'];
 
 //Given: {A, B, C, D, E, F, G, H}
 //TODO: hardcode the adjacency list
@@ -161,6 +202,9 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
   var queue = [];
   var path = [];
   var node;
+  var cond = [];
+  var adjacent = [];
+  var found = false;
 
   //if 2 nodes are directly connected, automatically not CI
   for (var x = 0; x < Xarray.length; x++) {
@@ -174,6 +218,8 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
         paths.push(one_path);
         result['CI'] = false;
         result['Pairs'] = paths;
+        console.log("NO: Nodes are directly connected");
+        console.log(result);
         return result;
       }
     }
@@ -183,49 +229,64 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
   for (var x = 0; x < Xarray.length; x++) {
     src = Xarray[x];
     queue.push([src]);
-    while (queue.length > 0) {
+    while (queue.length > 0 && Yarray.length > 0) {
       path = queue.shift();
-      console.log(path);
-
-      node = path.pop();
-      console.log("node is " + node);
+      console.log("path is = " + String(path));
+      node = path[path.length - 1];
+      console.log("node is = " + String(node));
 
       if (Yarray.includes(node)) {
         //check if path fulfills any conditions
+        var j = 1;
+        while (!found && j < (path.length - 1)) {
+          one_path = checkConditions(d_graph, path, j, Earray);
+          cond = one_path.pop();
+          if (cond) {
+            paths.push(one_path);
+            result['CI'] = true;
+            result['Pairs'] = paths;
+            found = true;
+
+            //remove dst_node from Yarray
+            dst = Yarray.indexOf(node);
+            Yarray.splice(dst, 1);
+            // console.log("Yarray");
+            // console.log(Yarray);
+          }
+          j++;
+        }
+        if (result['CI'] != true) {
+          one_path = tracePath(d_graph, path);
+          paths.push(one_path);
+          result['CI'] = false;
+          result['Pairs'] = paths;
+          console.log("NO: No conditions matched");
+          console.log(result);
+          return result;
+        }
+      }
+
+      adjacent = u_graph.adjacency_dict[node];
+      for (var a = 0; a < adjacent.length; a++) {
+        new_path = path.slice();
+        if (!path.includes(adjacent[a])) {
+          new_path.push(adjacent[a]);
+          queue.push(new_path);
+        }
       }
     }
   }
+  console.log("YES: Conditionally Independent");
+  console.log(result);
+  return result;
 }
 
 answer = conditionalIndependence(d_graph, u_graph, X, Y, E);
-// console.log(answer);
-// conn = performBfs(u_graph, X[0]);
-// console.log(conn);
 
 /*
-
-list_to_return
-for each src_node x
-  for each dst_node y
-    if x and y are directly connected
-      return [(path, all 3 conditions]; not CI
-    else
-      while not done?
-        look for a path between x and y
-        if (path fulfills condition1)
-          add (path, condition1) to list_to_return
-          break
-        else if (path fulfills condition2)
-          add (path, condition1) to list_to_return
-          break
-        else if (path fulfills condition3)
-          add (path, condition3) to list_to_return
-          break
-        else
-          return [(path, condition1)]; not CI
-
 NOTES:
 - for now assuming all of our graphs do not have cycles
 - only 1 element in Xarray and Yarray
-- Need to figure out how to structure return to Kate
+- If not conditionally independent, need to check which condition fails first
+- condition 3 need to check for children
 */
