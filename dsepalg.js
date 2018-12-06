@@ -61,7 +61,6 @@ class DGraph {
       return false
     }
   }
-  //TODO: check for cycles
 }
 
 class UGraph {
@@ -110,8 +109,6 @@ function tracePath(graph, path) {
 }
 
 function checkConditions(graph, path, index, Earray) {
-  // console.log(path);
-  // console.log("index = " + index);
   var result = [];
   var cond;
 
@@ -154,8 +151,8 @@ function checkConditions(graph, path, index, Earray) {
     result.push(c1);
     result.push(false);
   }
-  console.log("Traced Path");
-  console.log(result);
+  // console.log("Traced Path");
+  // console.log(result);
   return result;
 }
 
@@ -229,7 +226,7 @@ all_Graphs[d_graph] = u_graph;
 all_Graphs[d_graph1] = u_graph1;
 all_Graphs[d_graph2] = u_graph2;
 
-X = ['A', 'B'];
+X = ['D'];
 Y = ['F'];
 E = ['C'];
 
@@ -249,21 +246,23 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
   var node;
   var cond;
   var adjacent = [];
+  var pair = [];
 
   //if 2 nodes are directly connected, automatically not CI
   for (var x = 0; x < Xarray.length; x++) {
-    paths = [];
     for (var y = 0; y < Yarray.length; y++) {
       src = Xarray[x];
       dst = Yarray[y];
-
       connected = d_graph.checkDirectlyConnected(src, dst);
       if (connected) {
-        one_path = [src, connected, dst, c1];
-        paths.push(one_path);
+        one_path = [src, connected, dst];
+        pair.push(one_path);
+
+        paths.push(pair);
         result['CI'] = false;
         result['Pairs'] = paths;
         console.log("NO: Nodes are directly connected");
+        console.log(pair);
         console.log(result);
         return result;
       }
@@ -281,26 +280,35 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
       // console.log("node is = " + String(node));
 
       if (Yarray.includes(node)) {
-        cond = false;
-        // console.log("node is in Y");
+        match = false;
         //check if path fulfills any conditions
         for (var j = 1; j < path.length - 1; j++) {
+          pair = [];
           one_path = checkConditions(d_graph, path, j, Earray);
-          cond = one_path.pop();
-          if (cond) {
-            paths.push(one_path);
+          match = one_path.pop();
+          condition = one_path.pop();
+          if (match) {
+            pair.push(one_path);
+            pair.push(condition);
+            paths.push(pair);
             result['CI'] = true;
             result['Pairs'] = paths;
+            console.log("Pair = ");
+            console.log(pair);
             break;
           }
         }
-        if (cond == false) {
+        if (match == false) {
             paths = [];
+            pair = [];
             one_path = tracePath(d_graph, path);
-            paths.push(one_path);
+
+            pair.push(one_path);
+            paths.push(pair);
             result['CI'] = false;
             result['Pairs'] = paths;
             console.log("NO: No conditions matched");
+            console.log(pair);
             console.log(result);
             return result;
         }
