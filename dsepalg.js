@@ -272,186 +272,186 @@ let practiceProblems = [
   //   reason: 'X={A}, Y={C}, E={B} /nAll paths from X to Y are d-separated.'
   // },
 ];
-
-$(document).ready(function() {
-  $('#simplebutton').click(function() {
-    $("#exploreGraph").attr("src","images/simplegraph.png");
-    currentGraph = 0;
-    var i;
-    document.getElementById('setX').innerHTML = '';
-    for (i = 0; i < exampleGraphs[0].numNodes; i++) {
-      let curr = exampleGraphs[0];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="x' + (i+1) + '\" id="x' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="x' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setX').append(newHTML);
-    }
-    document.getElementById('setY').innerHTML = '';
-    for (i = 0; i < exampleGraphs[0].numNodes; i++) {
-      let curr = exampleGraphs[0];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="y' + (i+1) + '\" id="y' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="y' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setY').append(newHTML);
-    }
-    document.getElementById('setE').innerHTML = '';
-    for (i = 0; i < exampleGraphs[0].numNodes; i++) {
-      let curr = exampleGraphs[0];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="e' + (i+1) + '\" id="e' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setE').append(newHTML);
-    }
-  });
-
-  $('#complexbutton').click(function() {
-    $('#exploreGraph').attr("src", "images/complexgraph.png");
-    currentGraph = 1;
-    var i;
-    document.getElementById('setX').innerHTML = '';
-    for (i = 0; i < exampleGraphs[1].numNodes; i++) {
-      let curr = exampleGraphs[1];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="x' + (i+1) + '\" id="x' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="x' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setX').append(newHTML);
-    }
-    document.getElementById('setY').innerHTML = '';
-    for (i = 0; i < exampleGraphs[1].numNodes; i++) {
-      let curr = exampleGraphs[1];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="y' + (i+1) + '\" id="y' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="y' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setY').append(newHTML);
-    }
-    document.getElementById('setE').innerHTML = '';
-    for (i = 0; i < exampleGraphs[1].numNodes; i++) {
-      let curr = exampleGraphs[1];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="e' + (i+1) + '\" id="e' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setE').append(newHTML);
-    }
-  });
-
-  $('#challengebutton').click(function() {
-    $('#exploreGraph').attr("src", "images/challengegraph.png");
-    currentGraph = 2;
-    var i;
-    document.getElementById('setX').innerHTML = '';
-    for (i = 0; i < exampleGraphs[2].numNodes; i++) {
-      let curr = exampleGraphs[2];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="x' + (i+1) + '\" id="x' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="x' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setX').append(newHTML);
-    }
-    document.getElementById('setY').innerHTML = '';
-    for (i = 0; i < exampleGraphs[2].numNodes; i++) {
-      let curr = exampleGraphs[2];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="y' + (i+1) + '\" id="y' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="y' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setY').append(newHTML);
-    }
-    document.getElementById('setE').innerHTML = '';
-    for (i = 0; i < exampleGraphs[2].numNodes; i++) {
-      let curr = exampleGraphs[2];
-      let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
-        + 'name="e' + (i+1) + '\" id="e' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
-        + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
-      $('#setE').append(newHTML);
-    }
-  });
-
-  $('#practicebutton').click(function() {
-    currProb++;
-
-    $('input:radio').prop('checked', false);
-    document.getElementById('practiceresults').innerHTML = 'Try a problem! Your feedback will be here.';
-    document.getElementById('hint').innerHTML = '';
-
-    if (currProb < practiceProblems.length) {
-      $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
-      document.getElementById('practiceprob').innerHTML = '';
-      $('#practiceprob').append(practiceProblems[currProb].problem);
-    } else {
-      currProb = 0;
-      $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
-      document.getElementById('practiceprob').innerHTML = '';
-      $('#practiceprob').append(practiceProblems[currProb].problem);
-    }
-
-  });
-
-  $('#checkpracticebutton').click(function() {
-    let trueChecked = $('#true').is(':checked');
-    let falseChecked = $('#false').is(':checked');
-    if (!trueChecked && !falseChecked) {
-      alert("Please select True or False.");
-      return;
-    }
-    if (trueChecked) {
-      if (practiceProblems[currProb].answer == true) {
-        document.getElementById('practiceresults').innerHTML = '';
-        $('#practiceresults').append("Correct!");
-        // TODO: More reasons
-      } else {
-        document.getElementById('practiceresults').innerHTML = '';
-        $('#practiceresults').append("Incorrect.");
-        // TODO: More reasons
-      }
-    } else {
-      if (practiceProblems[currProb].answer == false) {
-        document.getElementById('practiceresults').innerHTML = '';
-        $('#practiceresults').append("Correct!");
-        // TODO: More reasons
-      } else {
-        document.getElementById('practiceresults').innerHTML = '';
-        $('#practiceresults').append("Incorrect.");
-        // TODO: More reasons
-      }
-    }
-
-  });
-
-  $('#hintlink').click(function() {
-    document.getElementById('hint').innerHTML = '';
-    $('#hint').append(practiceProblems[currProb].hint);
-  });
-
-
-  $('#examplebutton').click(function() {
-    var i;
-    let curr = exampleGraphs[currentGraph];
-    for (i = 0; i < curr.numNodes; i++) {
-
-      // make sure they don't try to put X's with the Y's and the E's
-      let xChecked = $('#x' + (i+1)).is(":checked");
-      let yChecked = $('#y' + (i+1)).is(":checked");
-      let eChecked = $('#e' + (i+1)).is(":checked");
-      let numChecked = 0;
-      if (xChecked) {
-        numChecked++;
-      }
-      if (yChecked) {
-        numChecked++;
-      }
-      if (eChecked) {
-        numChecked++;
-      }
-      if (numChecked > 1) {
-        alert("Node " + curr.nodes[i] + " cannot be in more than one set.\n"
-          + "It must be in either set X, set Y, or set E.");
-          return;
-      }
-    }
-    // Validation is done, now submit to the algorithm to see if they're right
-    // TODO: Get result from the algorithm
-
-    // TODO: Display the result on the page
-  });
-});
+//
+// $(document).ready(function() {
+//   $('#simplebutton').click(function() {
+//     $("#exploreGraph").attr("src","images/simplegraph.png");
+//     currentGraph = 0;
+//     var i;
+//     document.getElementById('setX').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[0].numNodes; i++) {
+//       let curr = exampleGraphs[0];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="x' + (i+1) + '\" id="x' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="x' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setX').append(newHTML);
+//     }
+//     document.getElementById('setY').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[0].numNodes; i++) {
+//       let curr = exampleGraphs[0];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="y' + (i+1) + '\" id="y' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="y' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setY').append(newHTML);
+//     }
+//     document.getElementById('setE').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[0].numNodes; i++) {
+//       let curr = exampleGraphs[0];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="e' + (i+1) + '\" id="e' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setE').append(newHTML);
+//     }
+//   });
+//
+//   $('#complexbutton').click(function() {
+//     $('#exploreGraph').attr("src", "images/complexgraph.png");
+//     currentGraph = 1;
+//     var i;
+//     document.getElementById('setX').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[1].numNodes; i++) {
+//       let curr = exampleGraphs[1];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="x' + (i+1) + '\" id="x' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="x' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setX').append(newHTML);
+//     }
+//     document.getElementById('setY').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[1].numNodes; i++) {
+//       let curr = exampleGraphs[1];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="y' + (i+1) + '\" id="y' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="y' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setY').append(newHTML);
+//     }
+//     document.getElementById('setE').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[1].numNodes; i++) {
+//       let curr = exampleGraphs[1];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="e' + (i+1) + '\" id="e' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setE').append(newHTML);
+//     }
+//   });
+//
+//   $('#challengebutton').click(function() {
+//     $('#exploreGraph').attr("src", "images/challengegraph.png");
+//     currentGraph = 2;
+//     var i;
+//     document.getElementById('setX').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[2].numNodes; i++) {
+//       let curr = exampleGraphs[2];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="x' + (i+1) + '\" id="x' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="x' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setX').append(newHTML);
+//     }
+//     document.getElementById('setY').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[2].numNodes; i++) {
+//       let curr = exampleGraphs[2];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="y' + (i+1) + '\" id="y' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="y' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setY').append(newHTML);
+//     }
+//     document.getElementById('setE').innerHTML = '';
+//     for (i = 0; i < exampleGraphs[2].numNodes; i++) {
+//       let curr = exampleGraphs[2];
+//       let newHTML = '<div class="form-check"><input class="form-check-input" type="checkbox"'
+//         + 'name="e' + (i+1) + '\" id="e' + (i+1) + '" value="' + curr.nodes[i] + '\\">'
+//         + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
+//       $('#setE').append(newHTML);
+//     }
+//   });
+//
+//   $('#practicebutton').click(function() {
+//     currProb++;
+//
+//     $('input:radio').prop('checked', false);
+//     document.getElementById('practiceresults').innerHTML = 'Try a problem! Your feedback will be here.';
+//     document.getElementById('hint').innerHTML = '';
+//
+//     if (currProb < practiceProblems.length) {
+//       $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
+//       document.getElementById('practiceprob').innerHTML = '';
+//       $('#practiceprob').append(practiceProblems[currProb].problem);
+//     } else {
+//       currProb = 0;
+//       $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
+//       document.getElementById('practiceprob').innerHTML = '';
+//       $('#practiceprob').append(practiceProblems[currProb].problem);
+//     }
+//
+//   });
+//
+//   $('#checkpracticebutton').click(function() {
+//     let trueChecked = $('#true').is(':checked');
+//     let falseChecked = $('#false').is(':checked');
+//     if (!trueChecked && !falseChecked) {
+//       alert("Please select True or False.");
+//       return;
+//     }
+//     if (trueChecked) {
+//       if (practiceProblems[currProb].answer == true) {
+//         document.getElementById('practiceresults').innerHTML = '';
+//         $('#practiceresults').append("Correct!");
+//         // TODO: More reasons
+//       } else {
+//         document.getElementById('practiceresults').innerHTML = '';
+//         $('#practiceresults').append("Incorrect.");
+//         // TODO: More reasons
+//       }
+//     } else {
+//       if (practiceProblems[currProb].answer == false) {
+//         document.getElementById('practiceresults').innerHTML = '';
+//         $('#practiceresults').append("Correct!");
+//         // TODO: More reasons
+//       } else {
+//         document.getElementById('practiceresults').innerHTML = '';
+//         $('#practiceresults').append("Incorrect.");
+//         // TODO: More reasons
+//       }
+//     }
+//
+//   });
+//
+//   $('#hintlink').click(function() {
+//     document.getElementById('hint').innerHTML = '';
+//     $('#hint').append(practiceProblems[currProb].hint);
+//   });
+//
+//
+//   $('#examplebutton').click(function() {
+//     var i;
+//     let curr = exampleGraphs[currentGraph];
+//     for (i = 0; i < curr.numNodes; i++) {
+//
+//       // make sure they don't try to put X's with the Y's and the E's
+//       let xChecked = $('#x' + (i+1)).is(":checked");
+//       let yChecked = $('#y' + (i+1)).is(":checked");
+//       let eChecked = $('#e' + (i+1)).is(":checked");
+//       let numChecked = 0;
+//       if (xChecked) {
+//         numChecked++;
+//       }
+//       if (yChecked) {
+//         numChecked++;
+//       }
+//       if (eChecked) {
+//         numChecked++;
+//       }
+//       if (numChecked > 1) {
+//         alert("Node " + curr.nodes[i] + " cannot be in more than one set.\n"
+//           + "It must be in either set X, set Y, or set E.");
+//           return;
+//       }
+//     }
+//     // Validation is done, now submit to the algorithm to see if they're right
+//     // TODO: Get result from the algorithm
+//
+//     // TODO: Display the result on the page
+//   });
+// });
 
 // TODO: Create check that Heero's algorithm works
 
@@ -548,14 +548,14 @@ function checkConditions(graph, path, index, Earray) {
     result.push(c1);
     result.push(false);
   }
-  // console.log("Traced Path");
-  // console.log(result);
+  console.log("Traced Path");
+  console.log(result);
   return result;
 }
 
-X = ['A', 'B'];
-Y = ['F'];
-E = ['C'];
+X = ['B'];
+Y = ['H', 'C'];
+E = ['F'];
 
 //Given: {A, B, C, D, E, F, G, H}
 //TODO: hardcode the adjacency list
@@ -656,7 +656,7 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
   return result;
 }
 
-var answer = conditionalIndependence(d_graph2, u_graph2, X, Y, E);
+var answer = conditionalIndependence(d_graph3, u_graph3, X, Y, E);
 
 
 /*
