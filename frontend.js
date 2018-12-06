@@ -7,11 +7,93 @@ let exampleGraphs = [
 let currentGraph = 0;
 let currProb = 0;
 
+// TODO: FIX THESE TO BE RELIANT ON THE ALGORITHM (answer and reason)
+// NOTE: these are currently placeholder problems
 let practiceProblems = [
-  { graph: 'images/practicegraph1.png', problem: 'P(A|B,C) = P(A|B)', answer: false },
-  { graph: 'images/practicegraph2.png', problem: 'P(A|C,D) = P(A|D)', answer: true },
-  { graph: 'images/practicegraph1.png', problem: 'P(A|B,C) = P(A|C)', answer: true },
-  { graph: 'images/practicegraph1.png', problem: 'P(A,B|C,D) = P(A|C,D)P(B|C,D)', answer: false},
+  {
+    graph: 'images/practicegraph1.png',
+    problem: 'P(A|B,C) = P(A|B)',
+    answer: false,
+    hint: 'X={A}, Y={C}, E={B}',
+    reason: 'X={A}, Y={C}, E={B} /nA and C are not d-separated on the path A->C'
+  },
+  {
+    graph: 'images/practicegraph2.png',
+    problem: 'P(A|C,D) = P(A|D)',
+    answer: true,
+    hint: 'X={A}, Y={C}, E={D}',
+    reason: 'X={A}, Y={C}, E={D} /nAll paths from X to Y are d-separated.'
+  },
+  {
+    graph: 'images/practicegraph1.png',
+    problem: 'P(A|B,C) = P(A|C)',
+    answer: true,
+    hint: 'X={A}, Y={C}, E={B}',
+    reason: 'X={A}, Y={C}, E={B} /nAll paths from X to Y are d-separated.'
+  },
+  {
+    graph: 'images/practicegraph1.png',
+    problem: 'P(A,B|C,D) = P(A|C,D)P(B|C,D)',
+    answer: false,
+    hint: 'X={A}, Y={B}, E={C,D}',
+    reason: 'X={A}, Y={B}, E={C,D} /nA and B are not d-separated on the path A->D<-B'
+  },
+  {
+    graph: 'images/practicegraph2.png',
+    problem: 'P(F|A,B)=P(F)',
+    answer: false,
+    hint: 'X={F}, Y={A,B}, E={}',
+    reason: 'X={F}, Y={A,B}, E={} /nA and F are not d-separated on the path A->D->F'
+  },
+  {
+    graph: 'images/practicegraph2.png',
+    problem: 'P(A|B)=P(A)',
+    answer: true,
+    hint: 'X={A}, Y={B}, E={}',
+    reason: 'X={A}, Y={B}, E={} /nAll paths from X to Y are d-separated.'
+  },
+  {
+    graph: 'images/practicegraph2.png',
+    problem: 'P(F|A,B,C,D,E)=P(F|D,E)',
+    answer: true,
+    hint: 'X={F}, Y={A,B,C}, E={D,E}',
+    reason: 'X={F}, Y={A,B,C}, E={E} /nAll paths from X to Y are d-separated.'
+  },
+  {
+    graph: 'images/practicegraph1.png',
+    problem: 'P(F,G|D) = P(F|D)P(G)',
+    answer: false,
+    hint: 'X={F}, Y={G}, E={D} and something else',
+    reason: 'X={F}, Y={G}, E={D} to evaluate P(F,G|D) = P(F|D)P(G|D) which is true, and P(G) != P(G|D)'
+  },
+  {
+    graph: 'images/practicegraph2.png',
+    problem: 'P(D|A,B)=P(D|A,B,F)',
+    answer: false,
+    hint: 'X={D}, Y={F}, E={A,B}',
+    reason: 'X={D}, Y={F}, E={A,B} /nD and F are not d-separated on the path D->F'
+  },
+  {
+    graph: 'images/practicegraph2.png',
+    problem: 'P(D|B,C,E)=P(D|E)',
+    answer: false,
+    hint: 'X={D}, Y={B,C}, E={E}',
+    reason: 'X={D}, Y={B,C}, E={E} /nB and D are not d-separated on the path B->D'
+  },
+  {
+    graph: 'images/practicegraph2.png',
+    problem: 'P(D,E|A,B,C)=P(D|A,B,C)P(E|A,B,C)',
+    answer: true,
+    hint: 'X={D}, Y={E}, E={A,B,C}',
+    reason: 'X={D}, Y={E}, E={A,B,C} /nAll paths from X to Y are d-separated.'
+  },
+  // {
+  //   graph: 'images/practicegraph1.png',
+  //   problem: 'P(A,B|D,F) = P(A|D)P(B|F)',
+  //   answer: false,
+  //   hint: 'X={A}, Y={C}, E={B}',
+  //   reason: 'X={A}, Y={C}, E={B} /nAll paths from X to Y are d-separated.'
+  // },
 ];
 
 $(document).ready(function() {
@@ -110,6 +192,7 @@ $(document).ready(function() {
 
     $('input:radio').prop('checked', false);
     document.getElementById('practiceresults').innerHTML = 'Try a problem! Your feedback will be here.';
+    document.getElementById('hint').innerHTML = '';
 
     if (currProb < practiceProblems.length) {
       $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
@@ -118,6 +201,7 @@ $(document).ready(function() {
     } else {
       currProb = 0;
       $('#practiceGraph').attr("src", practiceProblems[currProb].graph);
+      document.getElementById('practiceprob').innerHTML = '';
       $('#practiceprob').append(practiceProblems[currProb].problem);
     }
 
@@ -154,6 +238,11 @@ $(document).ready(function() {
 
   });
 
+  $('#hintlink').click(function() {
+    document.getElementById('hint').innerHTML = '';
+    $('#hint').append(practiceProblems[currProb].hint);
+  });
+
 
   $('#examplebutton').click(function() {
     var i;
@@ -186,3 +275,5 @@ $(document).ready(function() {
     // TODO: Display the result on the page
   });
 });
+
+// TODO: Create check that Heero's algorithm works

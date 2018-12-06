@@ -11,7 +11,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
   <script src="dsepalg.js"></script>
-  <script src="frontend.js"></script>
+  <!--script src="frontend.js"></script-->
   <link href="style.css" rel="stylesheet"/>
 </head>
 
@@ -179,7 +179,7 @@
         <div class="col">
           <div class="row">
             <div class="col">
-              <button id="practicebutton" class="btn btn-secondary">New Practice Problem</button>
+              <button id="practicebutton" class="btn btn-secondary" style="width:100%;">New Practice Problem</button>
             </div>
           </div>
           <div class="truefalse">
@@ -203,6 +203,12 @@
           </div>
           <div class="row">
             <div class="col">
+              <a id="hintlink" href="javascript:;">Need a hint?</a>
+              <p id="hint"></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
               <button id="checkpracticebutton" type="button" class="btn btn-secondary" style="width: 100%;">GO</button>
             </div>
           </div>
@@ -214,6 +220,11 @@
           <p id="practiceresults">Try a problem! Your feedback will be here.</p>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row" style="height: 10vh;">
+    <div class="col" style="margin-left: 5vw;">
+      <p>UC San Diego CSE 150 HW 7</p>
     </div>
   </div>
 
