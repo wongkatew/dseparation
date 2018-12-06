@@ -147,7 +147,7 @@ u_graph2.addEdge('C', 'E');
 u_graph2.addEdge('C', 'F');
 
 nodes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
-for(let i = 0; i < nodes.length; i++) {
+for (let i = 0; i < nodes.length; i++) {
   d_graph3.addNode(nodes[i]);
   u_graph3.addNode(nodes[i]);
 }
@@ -173,6 +173,50 @@ u_graph3.addEdge('E', 'G');
 u_graph3.addEdge('F', 'H');
 u_graph3.addEdge('F', 'I');
 u_graph3.addEdge('G', 'I');
+
+nodes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+for (let i = 0; i < nodes.length; i++) {
+  d_graph4.addNode(nodes[i]);
+  u_graph4.addNode(nodes[i]);
+}
+
+d_graph4.addEdge('A', 'C');
+d_graph4.addEdge('A', 'D');
+d_graph4.addEdge('B', 'D');
+d_graph4.addEdge('B', 'E');
+d_graph4.addEdge('C', 'F');
+d_graph4.addEdge('D', 'F');
+d_graph4.addEdge('D', 'G');
+d_graph4.addEdge('E', 'G');
+
+u_graph4.addEdge('A', 'C');
+u_graph4.addEdge('A', 'D');
+u_graph4.addEdge('B', 'D');
+u_graph4.addEdge('B', 'E');
+u_graph4.addEdge('C', 'F');
+u_graph4.addEdge('D', 'F');
+u_graph4.addEdge('D', 'G');
+u_graph4.addEdge('E', 'G');
+
+nodes = ['A', 'B', 'C', 'D', 'E', 'F']
+for (let i = 0; i < nodes.length; i++) {
+  d_graph5.addNode(nodes[i]);
+  u_graph5.addNode(nodes[i]);
+}
+
+d_graph5.addEdge('A', 'D');
+d_graph5.addEdge('B', 'D');
+d_graph5.addEdge('B', 'E');
+d_graph5.addEdge('C', 'E');
+d_graph5.addEdge('D', 'F');
+d_graph5.addEdge('E', 'F');
+
+u_graph5.addEdge('A', 'D');
+u_graph5.addEdge('B', 'D');
+u_graph5.addEdge('B', 'E');
+u_graph5.addEdge('C', 'E');
+u_graph5.addEdge('D', 'F');
+u_graph5.addEdge('E', 'F');
 
 // list of graphs
 let exampleGraphs = [
