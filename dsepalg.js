@@ -110,8 +110,8 @@ function tracePath(graph, path) {
 }
 
 function checkConditions(graph, path, index, Earray) {
-  console.log(path);
-  console.log("index = " + index);
+  // console.log(path);
+  // console.log("index = " + index);
   var result = [];
   var cond;
 
@@ -229,9 +229,9 @@ all_Graphs[d_graph] = u_graph;
 all_Graphs[d_graph1] = u_graph1;
 all_Graphs[d_graph2] = u_graph2;
 
-X = ['B'];
-Y = ['C'];
-E = ['A'];
+X = ['A', 'B'];
+Y = ['F'];
+E = ['C'];
 
 //Given: {A, B, C, D, E, F, G, H}
 //TODO: hardcode the adjacency list
@@ -239,21 +239,20 @@ E = ['A'];
 
 function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
   var result = [];
-  var paths = []
+  var paths = [];
   var one_path = [];
   var src, dst;
   var connected;
 
-  var visited_paths = [];
   var queue = [];
   var path = [];
   var node;
-  var cond = [];
+  var cond;
   var adjacent = [];
-  var found = false;
 
   //if 2 nodes are directly connected, automatically not CI
   for (var x = 0; x < Xarray.length; x++) {
+    paths = [];
     for (var y = 0; y < Yarray.length; y++) {
       src = Xarray[x];
       dst = Yarray[y];
@@ -276,31 +275,26 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
     src = Xarray[x];
     queue.push([src]);
     while (queue.length > 0) {
-      // && Yarray.length > 0
       path = queue.shift();
-      console.log("path is = " + String(path));
+      // console.log("path is = " + String(path));
       node = path[path.length - 1];
-      console.log("node is = " + String(node));
+      // console.log("node is = " + String(node));
 
       if (Yarray.includes(node)) {
+        cond = false;
+        // console.log("node is in Y");
         //check if path fulfills any conditions
-
         for (var j = 1; j < path.length - 1; j++) {
-        // while (!found && j < (path.length - 1)) {
           one_path = checkConditions(d_graph, path, j, Earray);
           cond = one_path.pop();
           if (cond) {
             paths.push(one_path);
             result['CI'] = true;
             result['Pairs'] = paths;
-            found = true;
-            //remove dst_node from Yarray
-            // dst = Yarray.indexOf(node);
-            // Yarray.splice(dst, 1);
-            // console.log("Yarray");
-            // console.log(Yarray);
+            break;
           }
-          else {
+        }
+        if (cond == false) {
             paths = [];
             one_path = tracePath(d_graph, path);
             paths.push(one_path);
@@ -309,18 +303,7 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
             console.log("NO: No conditions matched");
             console.log(result);
             return result;
-          }
-          // j++;
         }
-        // if (result['CI'] != true) {
-        //   one_path = tracePath(d_graph, path);
-        //   paths.push(one_path);
-        //   result['CI'] = false;
-        //   result['Pairs'] = paths;
-        //   console.log("NO: No conditions matched");
-        //   console.log(result);
-        //   return result;
-        // }
       }
 
       adjacent = u_graph.adjacency_dict[node];
@@ -338,12 +321,11 @@ function conditionalIndependence(d_graph, u_graph, Xarray, Yarray, Earray) {
   return result;
 }
 
-answer = conditionalIndependence(d_graph2, u_graph2, X, Y, E);
+var answer = conditionalIndependence(d_graph2, u_graph2, X, Y, E);
 
 
 /*
 NOTES:
-- for now assuming all of our graphs do not have cycles
 - only 1 element in Xarray and Yarray
-- If not conditionally independent, need to check which condition fails first
+- If not conditionally independent, need to check which condition fails
 */
