@@ -226,7 +226,7 @@ u_graph5.addEdge('E', 'F');
 let exampleGraphs = [
   { numNodes: 4, nodes: ['A', 'B', 'C', 'D'] },
   { numNodes: 6, nodes: ['A', 'B', 'C', 'D', 'E', 'F'] },
-  { numNodes: 9, nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',' I'] }
+  { numNodes: 9, nodes: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'] }
 ];
 
 let currentGraph = 0;
@@ -519,6 +519,9 @@ $(document).ready(function() {
 
     // Validation is done, now submit to the algorithm to see if they're right
     // Get result from the algorithm
+    console.log("SetX:", setX);
+    console.log("SetY", setY);
+    console.log("SetE", setE);
     let answer = conditionalIndependence(all_Example_Graphs_Directed[currentGraph],
       all_Example_Graphs_Undirected[currentGraph], setX, setY, setE);
     console.log("Answer: " + answer['CI']);
@@ -543,11 +546,11 @@ $(document).ready(function() {
         }
         $('#examplereason').append('<br/>&emsp;' + path);
         if (currPairs[j][1] === 'condition1') {
-          $('#examplereason').append('&emsp;&emsp;Observed event in causation');
+          $('#examplereason').append('&emsp;&emsp;Observed event in causation (Condition 1)');
         } else if (currPairs[j][1] === 'condition2') {
-          $('#examplereason').append('&emsp;&emsp;Observed common explanation');
+          $('#examplereason').append('&emsp;&emsp;Observed common explanation (Condition 2)');
         } else {
-          $('#examplereason').append('&emsp;&emsp;No observed common effect');
+          $('#examplereason').append('&emsp;&emsp;No observed common effect (Condition 3)');
         }
       }
     } else {
