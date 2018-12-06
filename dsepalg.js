@@ -80,7 +80,7 @@ let u_graph5 = new UGraph(6);
 all_Example_Graphs_Undirected.push(u_graph1);
 all_Example_Graphs_Undirected.push(u_graph2);
 all_Example_Graphs_Undirected.push(u_graph3);
-all_Example_Graphs_Directed.push(d_graph);
+// all_Example_Graphs_Directed.push(d_graph);
 all_Example_Graphs_Directed.push(d_graph1);
 all_Example_Graphs_Directed.push(d_graph2);
 all_Example_Graphs_Directed.push(d_graph3);
@@ -321,6 +321,7 @@ let practiceProblems = [
   // },
 ];
 
+
 $(document).ready(function() {
   $('#simplebutton').click(function() {
     $("#exploreGraph").attr("src","images/simplegraph.png");
@@ -350,6 +351,8 @@ $(document).ready(function() {
         + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
       $('#setE').append(newHTML);
     }
+    document.getElementById('exampleanswer').innerHTML = '';
+    document.getElementById('examplereason').innerHTML = '';
   });
 
   $('#complexbutton').click(function() {
@@ -380,6 +383,8 @@ $(document).ready(function() {
         + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
       $('#setE').append(newHTML);
     }
+    document.getElementById('exampleanswer').innerHTML = '';
+    document.getElementById('examplereason').innerHTML = '';
   });
 
   $('#challengebutton').click(function() {
@@ -410,6 +415,8 @@ $(document).ready(function() {
         + '<label class="form-check-label" for="e' + (i+1) +'">' + curr.nodes[i] + '<\/label><\/div>';
       $('#setE').append(newHTML);
     }
+    document.getElementById('exampleanswer').innerHTML = '';
+    document.getElementById('examplereason').innerHTML = '';
   });
 
   $('#practicebutton').click(function() {
@@ -472,6 +479,11 @@ $(document).ready(function() {
   $('#examplebutton').click(function() {
     var i;
     let curr = exampleGraphs[currentGraph];
+    let numXChecked = 0;
+    let numYChecked = 0;
+    let setX = [];
+    let setY = [];
+    let setE = [];
     for (i = 0; i < curr.numNodes; i++) {
 
       // make sure they don't try to put X's with the Y's and the E's
@@ -479,14 +491,20 @@ $(document).ready(function() {
       let yChecked = $('#y' + (i+1)).is(":checked");
       let eChecked = $('#e' + (i+1)).is(":checked");
       let numChecked = 0;
+
       if (xChecked) {
         numChecked++;
+        numXChecked++;
+        setX.push(curr.nodes[i]);
       }
       if (yChecked) {
         numChecked++;
+        numYChecked++;
+        setY.push(curr.nodes[i]);
       }
       if (eChecked) {
         numChecked++;
+        setE.push(curr.nodes[i]);
       }
       if (numChecked > 1) {
         alert("Node " + curr.nodes[i] + " cannot be in more than one set.\n"
@@ -494,14 +512,64 @@ $(document).ready(function() {
           return;
       }
     }
-    // Validation is done, now submit to the algorithm to see if they're right
-    // TODO: Get result from the algorithm
+    if (numXChecked == 0 || numYChecked == 0) {
+      alert("Please select at least one node in X and one node in Y.")
+      return;
+    }
 
-    // TODO: Display the result on the page
+    // Validation is done, now submit to the algorithm to see if they're right
+    // Get result from the algorithm
+    let answer = conditionalIndependence(all_Example_Graphs_Directed[currentGraph],
+      all_Example_Graphs_Undirected[currentGraph], setX, setY, setE);
+    console.log("Answer: " + answer['CI']);
+
+    document.getElementById('exampleanswer').innerHTML = '';
+    document.getElementById('examplereason').innerHTML = '';
+    // Display the result on the page
+    if (answer['CI'] == true) {
+      $('#exampleanswer').append('The nodes in set X and set Y ARE conditionally independent from each other given the nodes in set E!');
+      $('#examplereason').append('List of paths that are d-separated with their condition:');
+      for (let j = 0; j < answer['Pairs'].length; j++) {
+        let path = '';
+        let currPairs = answer['Pairs'];
+        for (let k = 0; k < currPairs[j][0].length; k++) {
+          if (currPairs[j][0][k] === 'l') {
+            path = path + '<--';
+          } else if (currPairs[j][0][k] === 'r') {
+            path = path + '-->';
+          } else {
+            path = path + currPairs[j][0][k];
+          }
+        }
+        $('#examplereason').append('<br/>&emsp;' + path);
+        if (currPairs[j][1] === 'condition1') {
+          $('#examplereason').append('&emsp;&emsp;Observed event in causation');
+        } else if (currPairs[j][1] === 'condition2') {
+          $('#examplereason').append('&emsp;&emsp;Observed common explanation');
+        } else {
+          $('#examplereason').append('&emsp;&emsp;No observed common effect');
+        }
+      }
+    } else {
+      $('#exampleanswer').append('The nodes in set X and set Y ARE NOT conditionally independent from each other given the nodes in set E.');
+      $('#examplereason').append('The path <br/>');
+      let path = '';
+      let thePair = answer['Pairs'][0][0];
+      for (let k = 0; k < thePair.length; k++) {
+        if (thePair[k] === 'l') {
+          path = path + '<--';
+        } else if (thePair[k] === 'r') {
+          path = path + '-->';
+        } else {
+          path = path + thePair[k];
+        }
+      }
+      $('#examplereason').append(path);
+      $('#examplereason').append('<br/>is not d-separated.');
+    }
   });
 });
 
-// TODO: Create check that Heero's algorithm works
 
 
 
@@ -1027,9 +1095,3 @@ function verifyPracticeProblems() {
 // var answer = conditionalIndependence(d_graph, u_graph, X, Y, E);
 verifyAlgorithm();
 verifyPracticeProblems();
-
-/*
-NOTES:
-- only 1 element in Xarray and Yarray
-- If not conditionally independent, need to check which condition fails
-*/
