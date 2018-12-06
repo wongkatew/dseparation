@@ -34,8 +34,22 @@
         knowing about A doesn't give us any additional information that influences our belief of when B can happen.
         Knowing that A and B are conditionally independent given C tells us that if we want to know P(A,B|C),
         we can multiply P(A|C) and P(B|C) to get P(A,B|C). <br/><br/>
-        TODO: more things about how d-separation is related to conditional independence in BNs and the theorem
+        Theorem (from lecture): P(X,Y|E) = P(X|E)P(Y|E) iif every undirected path from a node in X to a node in Y is
+        "d-separated" (or "blocked") by E. <br/><br/>
+        Definition of d-separation: <br/>
+        Path p is d-separated if there exists a node Z in path p where at least 1 of the following 3 conditions is true:
         </p>
+        <p>1. Observed event in causation, where Z is a member of E, the evidence set.</p>
+        <img src="images/condition1.png" style="width:15vw;"></img>
+        <p>2. Observed common explanation, where Z is a member of E, the evidence set.</p>
+        <img src="images/condition2.png" style="width:15vw;"></img>
+        <p>3. No observed common effect, where Z and the descendants of Z are NOT members of E, the evidence set.</p>
+        <img src="images/condition3.png" style="width:15vw;"></img>
+        <p>To find conditional independence: <br/>
+        1. Identify the nodes in sets X, Y, and E<br/>
+        2. List all undirected paths between X and Y<br/>
+        3. Put the edge directions back into consideration of those paths in 2, and mark the evidence nodes.<br/>
+        4. Check each path for d-separation.</p>
       </div>
     </div>
     <div class="row" style="height: 3vh; background-color: #D7903A;">
